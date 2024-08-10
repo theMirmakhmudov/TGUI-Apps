@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import '@telegram-apps/telegram-ui/dist/styles.css';
+import { AppRoot, Tabbar } from '@telegram-apps/telegram-ui';
 
-function App() {
+const tabs = [
+  { id: 1, text: 'Profil', Icon: () => <div className="icon">👤</div> },
+  { id: 2, text: 'Products', Icon: () => <div className="icon">🛒</div> },
+];
+
+export const App = () => {
+  const [currentTab, setCurrentTab] = useState(tabs[0].id);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppRoot>
+      <Tabbar>
+        {tabs.map(({ id, text, Icon }) => (
+          <Tabbar.Item
+            key={id}
+            text={text}
+            selected={currentTab === id}
+            onClick={() => setCurrentTab(id)}
+          >
+            <Icon />
+          </Tabbar.Item>
+        ))}
+      </Tabbar>
+      
+    </AppRoot>
   );
-}
+};
 
 export default App;
