@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
-import './App.css';
-import '@telegram-apps/telegram-ui/dist/styles.css';
-import { AppRoot, Tabbar } from '@telegram-apps/telegram-ui';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // React Router importi
+import '@telegram-apps/telegram-ui/dist/styles.css'; // Telegram UI stilini import qilish
+import { AppRoot } from '@telegram-apps/telegram-ui'; // Telegram UI komponenti
 
-const tabs = [
-  { id: 1, text: 'Profil', Icon: () => <div className="icon">👤</div> },
-  { id: 2, text: 'Products', Icon: () => <div className="icon">🛒</div> },
-];
+// O'zingizning sahifalaringizni import qilish
+import Home from './pages/Home'; // Home sahifasi
+import Team from './pages/Team'; // Team sahifasi
+import About from './pages/About'; // About sahifasi
+
+import Provider from './components/Provider'; // Provider komponenti import qilish
 
 export const App = () => {
-  const [currentTab, setCurrentTab] = useState(tabs[0].id);
-
   return (
-    <AppRoot>
-      <Tabbar>
-        {tabs.map(({ id, text, Icon }) => (
-          <Tabbar.Item
-            key={id}
-            text={text}
-            selected={currentTab === id}
-            onClick={() => setCurrentTab(id)}
-          >
-            <Icon />
-          </Tabbar.Item>
-        ))}
-      </Tabbar>
-      
-    </AppRoot>
+    <Router> {/* React Router yordamida sahifalarni ko'rsatish */}
+      <Provider> {/* Provider komponentini AppRoot ichida ishlatish */}
+        <AppRoot>
+          {/* Routes komponenti yordamida sahifalar o'rtasida navigatsiya */}
+          <Routes>
+            <Route path="/" element={<Home />} /> {/* Home sahifasi */}
+            <Route path="/team" element={<Team />} /> {/* Team sahifasi */}
+            <Route path="/about" element={<About />} /> {/* About sahifasi */}
+          </Routes>
+        </AppRoot>
+      </Provider>
+    </Router>
   );
 };
 
